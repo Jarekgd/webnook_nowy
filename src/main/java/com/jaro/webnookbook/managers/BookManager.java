@@ -117,20 +117,20 @@ public class BookManager {
             System.out.println("Database Connection FAILED!");
         }
 
-        pstmt.setString(1, title); // No extra '%' needed
+        pstmt.setString(1, title); 
 
         try (ResultSet rs = pstmt.executeQuery()) {
             while (rs.next()) {
                 Book book = new Book(
                     rs.getString("serialNo"),
-                    rs.getString("title"), // `title` is stored in DB but corresponds to `name` in Product
+                    rs.getString("title"),
                     rs.getString("author"),
                     rs.getDouble("price"),
                     rs.getInt("quantity"),
                     new Category(rs.getInt("categoryId"), rs.getString("categoryName"))
                 );
                 books.add(book);
-                System.out.println("Book Found: " + book.getName()); // ✅ Use getName() instead of getTitle()
+                System.out.println("Book Found: " + book.getName());
             }
         }
     } catch (SQLException e) {
@@ -139,34 +139,69 @@ public class BookManager {
     return books;
 }
 
-
-
-
-
     // Search books by author
+  
     public static List<Book> searchBooksByAuthor(String author) {
-        List<Book> books = new ArrayList<>();
-        String sql = "SELECT * FROM books WHERE LOWER(author) LIKE LOWER('%'||?||'%');";
-        
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setString(1, "%" + author + "%");
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    books.add(new Book(
-                        rs.getString("serialNo"),
-                        rs.getString("title"),
-                        rs.getString("author"),
-                        rs.getDouble("price"),
-                        rs.getInt("quantity"),
-                        new Category(rs.getInt("categoryId"), rs.getString("categoryName"))
-));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+    List<Book> books = new ArrayList<>();
+    String sql = "SELECT b.*, c.categoryName FROM books b "
+               + "JOIN categories c ON b.categoryId = c.categoryId "
+               + "WHERE LOWER(b.author) LIKE LOWER('%'||?||'%')";
+
+    try (Connection conn = DriverManager.getConnection(DB_URL);
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        if (conn != null) {
+            System.out.println("Database Connection Successful: " + DB_URL);
+        } else {
+            System.out.println("Database Connection FAILED!");
         }
-        return books;
+
+        pstmt.setString(1, author); 
+
+        try (ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                Book book = new Book(
+                    rs.getString("serialNo"),
+                    rs.getString("title"), 
+                    rs.getString("author"),
+                    rs.getDouble("price"),
+                    rs.getInt("quantity"),
+                    new Category(rs.getInt("categoryId"), rs.getString("categoryName"))
+                );
+                books.add(book);
+                System.out.println("Book Found: " + book.getName()); 
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+    return books;
 }
+}
+    
+//    public static List<Book> searchBooksByAuthor(String author) {
+//        List<Book> books = new ArrayList<>();
+//        String sql = "SELECT * FROM books WHERE LOWER(author) LIKE LOWER('%'||?||'%');";
+//        
+//        try (Connection conn = DriverManager.getConnection(DB_URL);
+//             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+//            
+//            pstmt.setString(1, "%" + author + "%");
+//            try (ResultSet rs = pstmt.executeQuery()) {
+//                while (rs.next()) {
+//                    books.add(new Book(
+//                        rs.getString("serialNo"),
+//                        rs.getString("title"),
+//                        rs.getString("author"),
+//                        rs.getDouble("price"),
+//                        rs.getInt("quantity"),
+//                        new Category(rs.getInt("categoryId"), rs.getString("categoryName"))
+//));
+//                }
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return books;
+//    }
+//}
