@@ -8,8 +8,10 @@
 <html>
 <head>
     <title>Register</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+    <div class="container">
     <h2>Register</h2>
 
     <form action="NewUserServlet" method="post">
@@ -31,5 +33,6 @@
 
     <br>
     <a href="login.jsp">Already have an account? Login</a>
+    </div>
 </body>
 </html>

@@ -16,8 +16,10 @@
 <html>
 <head>
     <title>Your Shopping Cart</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+    <div class="container">
     <h2>Your Shopping Cart</h2>
 
     <table border="1">
@@ -61,5 +63,6 @@
     <% } %>
 
     <a href="customerDashboard.jsp">Continue Shopping</a>
+    </div>
 </body>
 </html>

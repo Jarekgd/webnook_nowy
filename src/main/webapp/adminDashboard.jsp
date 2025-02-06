@@ -8,8 +8,10 @@
 <html>
 <head>
     <title>Admin Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+    <div class="container">
     <h2>Welcome, Admin</h2>
 
     <h3>Manage Products</h3>
@@ -31,5 +33,6 @@
         <li><a href="editAccount.jsp">Edit Your Account</a></li>
         <li><a href="logout.jsp">Logout</a></li>
     </ul>
+    </div>
 </body>
 </html>

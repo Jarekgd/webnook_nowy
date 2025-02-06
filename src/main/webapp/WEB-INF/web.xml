@@ -224,6 +224,7 @@
         <servlet-name>OrderDetailsServlet</servlet-name>
         <url-pattern>/OrderDetailsServlet</url-pattern>
     </servlet-mapping>
+    
     <servlet>
         <servlet-name>AddFundsServlet</servlet-name>
         <servlet-class>com.jaro.webnookbook.servlets.AddFundsServlet</servlet-class>
@@ -233,4 +234,6 @@
         <servlet-name>AddFundsServlet</servlet-name>
         <url-pattern>/AddFundsServlet</url-pattern>
     </servlet-mapping>
+    
+    
 </web-app>

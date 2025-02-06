@@ -13,8 +13,11 @@
 <html>
 <head>
     <title>Admin - View Accessories</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+
 </head>
 <body>
+    <div class="container">
     <h2>Accessories</h2>
 
     <table border="1">
@@ -40,5 +43,6 @@
     </table>
 
     <a href="adminDashboard.jsp">Back to Dashboard</a>
+    </div>
 </body>
 </html>

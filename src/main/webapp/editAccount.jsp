@@ -38,8 +38,10 @@
 <html>
 <head>
     <title>Edit Account</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+<div class="container">
     <h2>Edit Account Details</h2>
 
     <% if (request.getParameter("error") != null) { %>
@@ -67,5 +69,6 @@
     </form>
 
     <a href="customerDashboard.jsp">Back</a>
+</div>
 </body>
 </html>

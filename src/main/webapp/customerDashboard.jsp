@@ -11,8 +11,10 @@
 <html>
 <head>
     <title>Customer Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+    <div class="container">
     <h2>Welcome, <%= userLogin %>!</h2>
     <h3>Your Balance: $<%= balance %></h3>
 
@@ -45,5 +47,6 @@
         <li><a href="editAccount.jsp">Edit Account Details</a></li>
         <li><a href="logout.jsp">Logout</a></li>
     </ul>
+    </div>
 </body>
 </html>

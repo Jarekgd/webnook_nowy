@@ -11,8 +11,10 @@
 <html>
 <head>
     <title>Search Books</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+    <div class="container">
     <h2>Search for Books</h2>
 
     <!-- Search Form -->
@@ -62,5 +64,6 @@
     %>
 
     <a href="customerDashboard.jsp">Back to Dashboard</a>
+    </div>
 </body>
 </html>

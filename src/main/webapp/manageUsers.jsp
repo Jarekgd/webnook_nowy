@@ -13,8 +13,10 @@
 <html>
 <head>
     <title>Manage Users</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+    <div class="container">
     <h2>All Users (Admins & Customers)</h2>
     <table border="1">
         <tr>
@@ -37,5 +39,7 @@
         </tr>
         <% } %>
     </table>
+    <a href="adminDashboard.jsp">Back to Dashboard</a>
+    </div>
 </body>
 </html>

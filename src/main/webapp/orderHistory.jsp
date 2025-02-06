@@ -10,7 +10,14 @@
     OrderManager orderManager = new OrderManager();
     List<Order> orders = orderManager.getUserOrders(userLogin);
 %>
-
+<html>
+<head>
+    <title>Admin - View Accessories</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    
+</head>
+<body>
+    <div class="container">
 <h2>Your Order History</h2>
 <table border="1">
     <tr>
@@ -35,3 +42,6 @@
     %>
 </table>
 <a href="customerDashboard.jsp">Back to Dashboard</a>
+    </div>
+</body>
+</html>

@@ -18,7 +18,9 @@
 <html>
 <head>
     <title>Admin - Manage Orders</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
+<div class="container">
 <body>
     <h2>All Orders</h2>
 
@@ -50,5 +52,6 @@
     </table>
 
     <a href="adminDashboard.jsp">Back to Dashboard</a>
+</div>
 </body>
 </html>

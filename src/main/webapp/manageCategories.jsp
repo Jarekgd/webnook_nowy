@@ -13,9 +13,13 @@
 <html>
 <head>
     <title>Manage Categories</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+    <div class="container">
     <h2>Manage Categories</h2>
+    
+    
     <a href="addCategory.jsp">Add New Category</a>
 
     <h3>Existing Categories</h3>
@@ -32,5 +36,6 @@
     <% } %>
 
     <a href="adminDashboard.jsp">Back</a>
+    </div>
 </body>
 </html>

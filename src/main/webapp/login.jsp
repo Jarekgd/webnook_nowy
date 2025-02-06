@@ -1,9 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
 <head>
     <title>Login Page</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+    <div class="container">
     <h2>Login</h2>
     
     <% 
@@ -27,5 +30,6 @@
 
     <br>
     <a href="register.jsp">Register Here</a>
+    </div>
 </body>
 </html>
