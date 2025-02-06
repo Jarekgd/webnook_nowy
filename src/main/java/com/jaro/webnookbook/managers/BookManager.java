@@ -9,11 +9,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 //  BookManager class for handling book operations
- 
 public class BookManager {
     private static final String DB_URL = "jdbc:sqlite:C:\\webnookbook\\sqlite\\nookbook.db";
 
@@ -106,32 +104,33 @@ public class BookManager {
     // Search books by title
     public static List<Book> searchBooksByTitle(String title) {
     List<Book> books = new ArrayList<>();
-    String sql = "SELECT * FROM books WHERE LOWER(title) LIKE LOWER(?)";
+    String sql = "SELECT b.*, c.categoryName FROM books b "
+               + "JOIN categories c ON b.categoryId = c.categoryId "
+               + "WHERE LOWER(b.title) LIKE LOWER('%'||?||'%')";
 
-    try (Connection conn = DriverManager.getConnection(DB_URL)) {
+    try (Connection conn = DriverManager.getConnection(DB_URL);
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
         if (conn != null) {
             System.out.println("Database Connection Successful: " + DB_URL);
         } else {
             System.out.println("Database Connection FAILED!");
         }
 
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, "%" + title + "%");
-            System.out.println("🔍 Executing SQL Query: " + sql.replace("?", "'" + title + "'"));
+        pstmt.setString(1, title); // No extra '%' needed
 
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    Book book = new Book(
-                        rs.getString("serialNo"),
-                        rs.getString("title"),
-                        rs.getString("author"),
-                        rs.getDouble("price"),
-                        rs.getInt("quantity"),
-                        new Category(rs.getInt("categoryId"), rs.getString("categoryName"))
-                    );
-                    books.add(book);
-                    System.out.println("Book Found: " + book.getName());
-                }
+        try (ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                Book book = new Book(
+                    rs.getString("serialNo"),
+                    rs.getString("title"), // `title` is stored in DB but corresponds to `name` in Product
+                    rs.getString("author"),
+                    rs.getDouble("price"),
+                    rs.getInt("quantity"),
+                    new Category(rs.getInt("categoryId"), rs.getString("categoryName"))
+                );
+                books.add(book);
+                System.out.println("Book Found: " + book.getName()); // ✅ Use getName() instead of getTitle()
             }
         }
     } catch (SQLException e) {
@@ -142,10 +141,12 @@ public class BookManager {
 
 
 
+
+
     // Search books by author
     public static List<Book> searchBooksByAuthor(String author) {
         List<Book> books = new ArrayList<>();
-        String sql = "String sql = \"SELECT * FROM books WHERE LOWER(author) LIKE LOWER(?)\";";
+        String sql = "SELECT * FROM books WHERE LOWER(author) LIKE LOWER('%'||?||'%');";
         
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
