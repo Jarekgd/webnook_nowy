@@ -22,8 +22,10 @@
 <html>
 <head>
     <title>Edit Book</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+    <div class="container">
     <h2>Edit Book</h2>
 
     <form action="EditBookServlet" method="post">
@@ -54,5 +56,6 @@
     </form>
 
     <a href="manageBooks.jsp">Back</a>
+    </div>
 </body>
 </html>

@@ -12,8 +12,10 @@
 <html>
 <head>
     <title>Manage Accessories</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+    <div class="container">
     <h2>Manage Accessories</h2>
     <a href="addAccessory.jsp">Add New Accessory</a>
 
@@ -32,5 +34,6 @@
     <% } %>
 
     <a href="adminDashboard.jsp">Back</a>
+    </div>
 </body>
 </html>

@@ -12,8 +12,10 @@
 <html>
 <head>
     <title>Manage Books</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+    <div class="container">
     <h2>Manage Books</h2>
     <a href="addBook.jsp">Add New Book</a>
 
@@ -33,5 +35,6 @@
     <% } %>
 
     <a href="adminDashboard.jsp">Back</a>
+    </div>
 </body>
 </html>
