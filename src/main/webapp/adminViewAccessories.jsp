@@ -19,7 +19,7 @@
 <body>
     <div class="container">
     <h2>Accessories</h2>
-
+<a href="addAccessory.jsp">Add New Accessory</a>
     <table border="1">
         <tr>
             <th>Serial Number</th>

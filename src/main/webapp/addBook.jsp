@@ -13,8 +13,10 @@
 <html>
 <head>
     <title>Add Book</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+    <div class="container">
     <h2>Add New Book</h2>
 
     <form action="AddBookServlet" method="post">
@@ -43,6 +45,7 @@
         <button type="submit">Add Book</button>
     </form>
 
-    <a href="manageBooks.jsp">Back to Books</a>
+    <a href="adminViewBooks.jsp">Back to Books</a>
+    </div>
 </body>
 </html>

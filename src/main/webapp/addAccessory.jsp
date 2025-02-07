@@ -8,8 +8,10 @@
 <html>
 <head>
     <title>Add Accessory</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+    <div class="container">
     <h2>Add New Accessory</h2>
     
     <form action="AddAccessoryServlet" method="post">
@@ -28,6 +30,7 @@
         <button type="submit">Add Accessory</button>
     </form>
 
-    <a href="manageAccessories.jsp">Back to Accessories</a>
+    <a href="adminViewAccessories.jsp">Back to Accessories</a>
+    </div>
 </body>
 </html>

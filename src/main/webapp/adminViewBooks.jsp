@@ -18,7 +18,7 @@
 <body>
     <div class="container">
     <h2>Books</h2>
-
+<a href="addBook.jsp">Add New Book</a>
     <table border="1">
         <tr>
             <th>Serial Number</th>
