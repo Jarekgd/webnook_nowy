@@ -55,7 +55,7 @@
         <button type="submit">Update Book</button>
     </form>
 
-    <a href="manageBooks.jsp">Back</a>
+    <a href="adminViewBooks.jsp">Back</a>
     </div>
 </body>
 </html>

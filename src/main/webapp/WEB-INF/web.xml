@@ -235,5 +235,14 @@
         <url-pattern>/AddFundsServlet</url-pattern>
     </servlet-mapping>
     
+    <servlet>
+        <servlet-name>EditUserServlet</servlet-name>
+        <servlet-class>com.jaro.webnookbook.servlets.EditUserServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>EditUserServlet</servlet-name>
+        <url-pattern>/EditUserServlet</url-pattern>
+    </servlet-mapping>
     
 </web-app>

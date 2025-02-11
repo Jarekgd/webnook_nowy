@@ -22,6 +22,7 @@ public class AddToCartServlet extends HttpServlet {
         String userLogin = (String) session.getAttribute("userLogin");
 
         if (userLogin == null) {
+            System.out.println("DEBUG: User is not logged in.");
             response.sendRedirect("login.jsp?error=Please log in to add items to your cart");
             return;
         }
@@ -31,13 +32,15 @@ public class AddToCartServlet extends HttpServlet {
         String productType = request.getParameter("productType");
         String quantityParam = request.getParameter("quantity");
 
+        System.out.println("DEBUG: UserLogin: " + userLogin);
         System.out.println("DEBUG: SerialNo: " + serialNo);
         System.out.println("DEBUG: ProductType: " + productType);
         System.out.println("DEBUG: Quantity (String): " + quantityParam);
 
-
         if (serialNo == null || serialNo.isEmpty() || productType == null || productType.isEmpty() || quantityParam == null || quantityParam.isEmpty()) {
-            response.sendRedirect("customerDashboard.jsp?error=Invalid item or quantity");
+            System.out.println("DEBUG: Invalid item or quantity.");
+            response.sendRedirect("customerCart.jsp?error=Invalid item or quantity");
+
             return;
         }
 
@@ -45,10 +48,12 @@ public class AddToCartServlet extends HttpServlet {
         try {
             quantity = Integer.parseInt(quantityParam);
             if (quantity <= 0) {
+                System.out.println("DEBUG: Invalid quantity (must be > 0)");
                 response.sendRedirect("customerDashboard.jsp?error=Quantity must be at least 1");
                 return;
             }
         } catch (NumberFormatException e) {
+            System.out.println("DEBUG: Invalid quantity format.");
             response.sendRedirect("customerDashboard.jsp?error=Invalid quantity format");
             return;
         }
@@ -58,22 +63,25 @@ public class AddToCartServlet extends HttpServlet {
             String productName = "";
             double productPrice = 0.0;
 
-            if ("book".equals(productType)) {
+            if ("book".equalsIgnoreCase(productType)) {
                 Book book = BookManager.getBookBySerialNo(serialNo);
                 if (book != null) {
-                    productName = book.getName();
+                    productName = book.getName(); // Using getName() from Product class
                     productPrice = book.getPrice();
+                    System.out.println("DEBUG: Book Found - " + productName + " | Price: " + productPrice);
+                } else {
+                    System.out.println("DEBUG: Book not found for SerialNo: " + serialNo);
                 }
-            } else if ("accessory".equals(productType)) {
+            } else if ("accessory".equalsIgnoreCase(productType)) {
                 Accessory accessory = AccessoryManager.getAccessoryBySerialNo(serialNo);
                 if (accessory != null) {
-                    productName = accessory.getName();
+                    productName = accessory.getName(); // Using getName() from Product class
                     productPrice = accessory.getPrice();
+                    System.out.println("DEBUG: Accessory Found - " + productName + " | Price: " + productPrice);
+                } else {
+                    System.out.println("DEBUG: Accessory not found for SerialNo: " + serialNo);
                 }
             }
-
-            System.out.println("DEBUG: Product Name: " + productName);
-            System.out.println("DEBUG: Product Price: " + productPrice);
 
             if (!productName.isEmpty()) {
                 CartManager.addToCart(userLogin, serialNo, productName, productPrice, quantity);

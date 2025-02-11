@@ -18,8 +18,10 @@
 <html>
 <head>
     <title>Edit Accessory</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+    <div class="container">
     <h2>Edit Accessory</h2>
 
     <form action="EditAccessoryServlet" method="post">
@@ -37,6 +39,7 @@
         <button type="submit">Update Accessory</button>
     </form>
 
-    <a href="manageAccessories.jsp">Back</a>
+    <a href="adminViewAccessories.jsp">Back</a>
+    </div>
 </body>
 </html>

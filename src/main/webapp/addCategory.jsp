@@ -8,8 +8,10 @@
 <html>
 <head>
     <title>Add Category</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+    <div class="container">
     <h2>Add New Category</h2>
     
     <!-- Form to Add a New Category -->
@@ -21,5 +23,6 @@
     </form>
 
     <a href="manageCategories.jsp">Back to Categories</a>
+    <div class="container">
 </body>
 </html>

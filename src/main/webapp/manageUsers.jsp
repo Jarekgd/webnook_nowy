@@ -33,7 +33,7 @@
             <td><%= user.getLogin() %></td>
             <td><%= user.getPrivilege() %></td>
             <td>
-                <a href="editUser.jsp?id=<%= user.getLogin() %>">Edit</a> |
+                <a href="EditUserServlet?id=<%= user.getLogin() %>">Edit</a> |
                 <a href="DeleteUserServlet?id=<%= user.getLogin() %>" onclick="return confirm('Are you sure?');">Delete</a>
             </td>
         </tr>

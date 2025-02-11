@@ -1,47 +1,37 @@
 package com.jaro.webnookbook.servlets;
 
+import com.jaro.webnookbook.managers.UserManager;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/DeleteUserServlet")  
+@WebServlet("/DeleteUserServlet")
 public class DeleteUserServlet extends HttpServlet {
-    private static final String DB_URL = "jdbc:sqlite:C:\\webnookbook\\sqlite\\nookbook.db";
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int userId = Integer.parseInt(request.getParameter("id"));
-
-        if (userId <= 0) {
-            response.sendRedirect("manageUsers.jsp?error=Invalid user ID");
-            return;
-        }
-
         try {
-            Class.forName("org.sqlite.JDBC");
-            try (Connection connection = DriverManager.getConnection(DB_URL)) {
-                String sql = "DELETE FROM users WHERE usrId = ?";
-                try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-                    pstmt.setInt(1, userId);
-                    int rowsAffected = pstmt.executeUpdate();
+            String loginParam = request.getParameter("id");
 
-                    if (rowsAffected > 0) {
-                        response.sendRedirect("manageUsers.jsp?success=User deleted successfully");
-                    } else {
-                        response.sendRedirect("manageUsers.jsp?error=User not found");
-                    }
-                }
+            // Validate login parameter
+            if (loginParam == null || loginParam.trim().isEmpty()) {
+                response.sendRedirect("manageUsers.jsp?error=Invalid user login");
+                return;
+            }
+
+            boolean success = UserManager.deleteUserByLogin(loginParam);
+
+            if (success) {
+                response.sendRedirect("manageUsers.jsp?success=User deleted");
+            } else {
+                response.sendRedirect("manageUsers.jsp?error=User not found or could not be deleted");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("manageUsers.jsp?error=Database error");
+            response.sendRedirect("manageUsers.jsp?error=Server error");
         }
     }
 }

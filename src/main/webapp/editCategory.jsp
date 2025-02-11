@@ -20,8 +20,10 @@
 <html>
 <head>
     <title>Edit Category</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+    <div class="container">
     <h2>Edit Category</h2>
 
     <form action="EditCategoryServlet" method="post">
@@ -34,5 +36,6 @@
     </form>
 
     <a href="manageCategories.jsp">Back to Categories</a>
+    </div>
 </body>
 </html>

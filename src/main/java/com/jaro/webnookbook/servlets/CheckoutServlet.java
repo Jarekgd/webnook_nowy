@@ -1,7 +1,14 @@
 package com.jaro.webnookbook.servlets;
 
-import com.jaro.webnookbook.models.*;
-import com.jaro.webnookbook.managers.DatabaseConnection;
+import java.io.IOException;
+import java.util.ArrayList;
+import com.jaro.webnookbook.models.CartItem;
+import com.jaro.webnookbook.managers.CartManager;
+import com.jaro.webnookbook.managers.OrderManager;
+import com.jaro.webnookbook.managers.UserManager;
+import com.jaro.webnookbook.managers.BookManager;
+import com.jaro.webnookbook.managers.AccessoryManager;
+import com.jaro.webnookbook.managers.CustomerManager;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -9,104 +16,55 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
-
-@WebServlet("/checkout")
+@WebServlet("/CheckoutServlet")
 public class CheckoutServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        Integer userId = (Integer) session.getAttribute("userId"); // ✅ Get userId from session
-        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
 
-        if (user == null || userId == null || cart == null || cart.isEmpty()) {
-            response.sendRedirect("cart.jsp?error=No items in cart");
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        String userLogin = (String) session.getAttribute("userLogin");
+
+        if (userLogin == null) {
+            response.sendRedirect("login.jsp?error=Please log in first");
             return;
         }
 
-        double totalPrice = 0;
-        for (CartItem item : cart) {
-            totalPrice += item.getPrice() * item.getQuantity();
+        // Fetch cart items
+        ArrayList<CartItem> cartItems = CartManager.getCart(userLogin);
+        if (cartItems == null || cartItems.isEmpty()) {
+            response.sendRedirect("customerCart.jsp?error=Your cart is empty");
+            return;
         }
 
-        try (Connection conn = DatabaseConnection.getConnection()) {
-            conn.setAutoCommit(false); // ✅ Enable transaction management
+        // Calculate total amount
+        double totalAmount = 0.0;
+        for (CartItem item : cartItems) {
+            totalAmount += item.getPrice() * item.getQuantity();
+        }
 
-            // Insert new order into Orders table
-            String orderSql = "INSERT INTO Orders (userId, orderDate, totalPrice, status) VALUES (?, datetime('now'), ?, 'Completed')";
-            int orderId = -1;
-            try (PreparedStatement orderStmt = conn.prepareStatement(orderSql, PreparedStatement.RETURN_GENERATED_KEYS)) {
-                orderStmt.setInt(1, userId); // ✅ Use userId from session
-                orderStmt.setDouble(2, totalPrice);
-                orderStmt.executeUpdate();
+        System.out.println("DEBUG: Attempting to create order for user: " + userLogin);
+        System.out.println("DEBUG: Total Order Amount: " + totalAmount);
 
-                ResultSet rs = orderStmt.getGeneratedKeys();
-                if (rs.next()) {
-                    orderId = rs.getInt(1);
-                }
+        try {
+            // Attempt to create an order
+            int orderId = OrderManager.createOrder(userLogin, totalAmount, cartItems);
+
+            if (orderId > 0) {
+                System.out.println("DEBUG: Order created successfully with ID: " + orderId);
+
+                // Clear cart after checkout
+                CartManager.clearCart(userLogin);
+                response.sendRedirect("customerOrders.jsp?orderId=" + orderId + "&success=Order placed successfully");
+
+            } else {
+                System.out.println("DEBUG: Order creation failed!");
+                response.sendRedirect("customerCart.jsp?error=Failed to place order");
             }
-
-            if (orderId == -1) {
-                conn.rollback();
-                response.sendRedirect("cart.jsp?error=Order creation failed");
-                return;
-            }
-
-            //  Insert items into OrderItems table
-            String orderItemSql = "INSERT INTO OrderItems (orderId, productSerial, quantity, price) VALUES (?, ?, ?, ?)";
-            try (PreparedStatement orderItemStmt = conn.prepareStatement(orderItemSql)) {
-                for (CartItem item : cart) {
-                    orderItemStmt.setInt(1, orderId);
-                    orderItemStmt.setString(2, item.getSerialNo());
-                    orderItemStmt.setInt(3, item.getQuantity());
-                    orderItemStmt.setDouble(4, item.getPrice());
-                    orderItemStmt.executeUpdate();
-                }
-            }
-
-            //  Reduce stock quantity for Books and Accessories
-            for (CartItem item : cart) {
-                String productSerial = item.getSerialNo();
-
-                // Check if the item is a Book
-                String checkBookSql = "SELECT COUNT(*) FROM books WHERE serialNo = ?";
-                try (PreparedStatement checkBookStmt = conn.prepareStatement(checkBookSql)) {
-                    checkBookStmt.setString(1, productSerial);
-                    ResultSet bookCheckRs = checkBookStmt.executeQuery();
-
-                    if (bookCheckRs.next() && bookCheckRs.getInt(1) > 0) {
-                        // Reduce stock in books table
-                        String updateBookStockSql = "UPDATE books SET quantity = quantity - ? WHERE serialNo = ?";
-                        try (PreparedStatement updateBookStockStmt = conn.prepareStatement(updateBookStockSql)) {
-                            updateBookStockStmt.setInt(1, item.getQuantity());
-                            updateBookStockStmt.setString(2, item.getSerialNo());
-                            updateBookStockStmt.executeUpdate();
-                        }
-                    } else {
-                        // Reduce stock in accessories table
-                        String updateAccessoryStockSql = "UPDATE accessories SET quantity = quantity - ? WHERE serialNo = ?";
-                        try (PreparedStatement updateAccessoryStockStmt = conn.prepareStatement(updateAccessoryStockSql)) {
-                            updateAccessoryStockStmt.setInt(1, item.getQuantity());
-                            updateAccessoryStockStmt.setString(2, item.getSerialNo());
-                            updateAccessoryStockStmt.executeUpdate();
-                        }
-                    }
-                }
-            }
-
-            conn.commit(); 
-            session.removeAttribute("cart"); 
-
-            response.sendRedirect("orderConfirmation.jsp?orderId=" + orderId);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("cart.jsp?error=Checkout failed");
+            System.out.println("DEBUG: Exception occurred: " + e.getMessage());
+            response.sendRedirect("customerCart.jsp?error=An unexpected error occurred");
         }
     }
 }
-
