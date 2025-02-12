@@ -78,25 +78,36 @@ public class OrderManager {
     }
 
     public static List<Order> getUserOrders(String userLogin) {
-        List<Order> orders = new ArrayList<>();
-        String query = "SELECT * FROM orders WHERE userId = ? ORDER BY orderDate DESC";
-        try (Connection conn = DriverManager.getConnection(DB_URL); PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setString(1, userLogin);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                orders.add(new Order(
-                        rs.getInt("orderId"),
-                        rs.getString("userId"),
-                        rs.getDouble("totalPrice"),
-                        rs.getString("orderDate"),
-                        rs.getString("status")
-                ));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+    List<Order> orders = new ArrayList<>();
+    String query = "SELECT * FROM Orders WHERE userId = (SELECT userId FROM users WHERE login = ?) ORDER BY orderDate DESC";
+
+    try (Connection conn = DriverManager.getConnection(DB_URL);
+         PreparedStatement stmt = conn.prepareStatement(query)) {
+
+        stmt.setString(1, userLogin);
+        ResultSet rs = stmt.executeQuery();
+
+        while (rs.next()) {
+            Order order = new Order(
+                rs.getInt("orderId"),
+                userLogin, // Use the login instead of userId
+                rs.getDouble("totalPrice"),
+                rs.getString("orderDate"),
+                rs.getString("status")
+            );
+
+            // Fetch order items
+            List<OrderItem> items = getOrderItems(order.getOrderId());
+            order.setItems(items);
+
+            orders.add(order);
         }
-        return orders;
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+    return orders;
+}
+
 
     public static List<Order> getAllOrders() {
         List<Order> orders = new ArrayList<>();
@@ -118,60 +129,66 @@ public class OrderManager {
     }
 
     public static Order getOrderDetails(int orderId) {
-        Order order = null;
-        String query = "SELECT * FROM orders WHERE orderId = ?";
+    Order order = null;
+    String query = "SELECT * FROM Orders WHERE orderId = ?";
 
-        try (Connection conn = DriverManager.getConnection(DB_URL); PreparedStatement stmt = conn.prepareStatement(query)) {
+    try (Connection conn = DriverManager.getConnection(DB_URL);
+         PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setInt(1, orderId);
-            ResultSet rs = stmt.executeQuery();
+        stmt.setInt(1, orderId);
+        ResultSet rs = stmt.executeQuery();
 
-            if (rs.next()) {
-                order = new Order(
-                        rs.getInt("orderId"),
-                        rs.getString("userId"), // Ensure this matches your schema
-                        rs.getDouble("totalPrice"),
-                        rs.getString("orderDate"),
-                        rs.getString("status")
-                );
-            }
-
-            if (order != null) {
-                List<OrderItem> items = getOrderItems(orderId);
-                order.setItems(items);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (rs.next()) {
+            order = new Order(
+                rs.getInt("orderId"),
+                rs.getString("userId"), 
+                rs.getDouble("totalPrice"),
+                rs.getString("orderDate"),
+                rs.getString("status")
+            );
         }
-        return order;
+
+        if (order != null) {
+            List<OrderItem> items = getOrderItems(orderId);
+            order.setItems(items);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+    return order;
+}
+
+
 
     public static List<OrderItem> getOrderItems(int orderId) {
-        List<OrderItem> items = new ArrayList<>();
-        String sql = "SELECT itemId, orderId, serialNo, name, price, quantity FROM order_items WHERE orderId = ?";
+    List<OrderItem> items = new ArrayList<>();
+    String sql = "SELECT itemId, orderId, productSerial, name, price, quantity FROM OrderItems WHERE orderId = ?";
 
-        try (Connection conn = DriverManager.getConnection(DB_URL); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+    try (Connection conn = DriverManager.getConnection(DB_URL);
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setInt(1, orderId);
-            ResultSet rs = pstmt.executeQuery();
+        pstmt.setInt(1, orderId);
+        ResultSet rs = pstmt.executeQuery();
 
-            while (rs.next()) {
-                OrderItem item = new OrderItem(
-                        rs.getInt("itemId"),
-                        rs.getInt("orderId"),
-                        rs.getString("serialNo"),
-                        rs.getString("name"),
-                        rs.getDouble("price"),
-                        rs.getInt("quantity")
-                );
-                items.add(item);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        while (rs.next()) {
+            OrderItem item = new OrderItem(
+                rs.getInt("itemId"),
+                rs.getInt("orderId"),
+                rs.getString("productSerial"),
+                rs.getString("name"),
+                rs.getDouble("price"),
+                rs.getInt("quantity")
+            );
+            items.add(item);
         }
-
-        return items;
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+
+    return items;
+}
+
+
 
 }

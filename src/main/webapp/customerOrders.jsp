@@ -1,43 +1,51 @@
+<%@ page import="java.util.List" %>
 <%@ page import="com.jaro.webnookbook.models.Order" %>
 <%@ page import="com.jaro.webnookbook.managers.OrderManager" %>
-<%@ page import="java.util.List" %>
+<%@ page session="true" %>
 
 <%
-    String orderIdParam = request.getParameter("orderId");
-
-    if (orderIdParam == null || orderIdParam.isEmpty()) {
-        out.println("<p style='color:red;'>Error: Invalid or missing order ID</p>");
+    String userLogin = (String) session.getAttribute("userLogin");
+    if (userLogin == null) {
+        response.sendRedirect("login.jsp?error=Please log in first");
         return;
     }
 
-    int orderId = Integer.parseInt(orderIdParam);
-    Order order = OrderManager.getOrderDetails(orderId);
-
-    if (order == null) {
-        out.println("<p style='color:red;'>Error: Order not found.</p>");
-        return;
-    }
+    List<Order> userOrders = OrderManager.getUserOrders(userLogin);
 %>
 
 <html>
-    <head>
-        <title>Order Details</title>
-    </head>
-    <body>
-        <h2>Order Details</h2>
+<head>
+    <title>Your Order History</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div class="container">
+    <h2>Your Order History</h2>
 
-        <p>Order ID: <%= order.getOrderId()%></p>
-        <p>User: <%= order.getUserLogin()%></p>
-        <p>Total Amount: $<%= order.getTotalAmount()%></p>
-        <p>Status: <%= order.getStatus()%></p>
+    <% if (userOrders.isEmpty()) { %>
+        <p>You have no past orders.</p>
+    <% } else { %>
+        <table border="1">
+            <tr>
+                <th>Order ID</th>
+                <th>Total Price</th>
+                <th>Order Date</th>
+                <th>Status</th>
+                <th>Details</th>
+            </tr>
+            <% for (Order order : userOrders) { %>
+                <tr>
+                    <td><%= order.getOrderId() %></td>
+                    <td>$<%= order.getTotalAmount() %></td>
+                    <td><%= order.getOrderDate() %></td>
+                    <td><%= order.getStatus() %></td>
+                    <td><a href="orderDetails.jsp?orderId=<%= order.getOrderId() %>">View</a></td>
+                </tr>
+            <% } %>
+        </table>
+    <% } %>
 
-        <h3>Order Items:</h3>
-        <ul>
-            <% for (var item : order.getItems()) {%>
-            <li><%= item.getName()%> - $<%= item.getPrice()%> (x<%= item.getQuantity()%>)</li>
-                <% }%>
-        </ul>
-
-        <a href="customerDashboard.jsp">Back to Orders</a>
-    </body>
+    <a href="customerDashboard.jsp">Back to Dashboard</a>
+    </div>
+</body>
 </html>
