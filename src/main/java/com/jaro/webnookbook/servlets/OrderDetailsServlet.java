@@ -14,37 +14,25 @@ import java.util.List;
 
 @WebServlet("/OrderDetailsServlet")
 public class OrderDetailsServlet extends HttpServlet {
-
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String orderIdStr = request.getParameter("orderId");
-        
-        if (orderIdStr == null || orderIdStr.isEmpty()) {
-            response.sendRedirect("orderHistory.jsp?error=Invalid order selection");
+
+        String orderIdParam = request.getParameter("orderId");
+
+        if (orderIdParam == null || orderIdParam.isEmpty()) {
+            response.sendRedirect("customerOrders.jsp?error=Invalid order ID");
             return;
         }
-        
-        try {
-            int orderId = Integer.parseInt(orderIdStr);
-            Order order = OrderManager.getOrderDetails(orderId);
 
-            if (order != null) {
-                List<OrderItem> orderItems = order.getItems();
+        int orderId = Integer.parseInt(orderIdParam);
+        Order order = OrderManager.getOrderDetails(orderId);
 
-                // Ensure orderItems is never null
-                if (orderItems == null) {
-                    orderItems = new ArrayList<>();
-                }
-
-                request.setAttribute("orderItems", orderItems);
-                request.setAttribute("order", order); // Pass the order object too
-                request.getRequestDispatcher("orderDetails.jsp").forward(request, response);
-            } else {
-                response.sendRedirect("orderHistory.jsp?error=Order not found");
-            }
-        } catch (NumberFormatException e) {
-            response.sendRedirect("orderHistory.jsp?error=Invalid order ID");
+        if (order == null) {
+            response.sendRedirect("customerOrders.jsp?error=Order not found");
+            return;
         }
+
+        request.setAttribute("order", order);
+        request.getRequestDispatcher("orderDetails.jsp").forward(request, response);
     }
 }

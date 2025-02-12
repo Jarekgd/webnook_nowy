@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -91,4 +92,33 @@ public class AccessoryManager {
             e.printStackTrace();
         }
     }
+    
+    public static boolean isAccessory(String serialNo) {
+    String query = "SELECT COUNT(*) FROM accessories WHERE serialNo = ?";
+    try (Connection conn = DriverManager.getConnection(DB_URL);
+         PreparedStatement stmt = conn.prepareStatement(query)) {
+        stmt.setString(1, serialNo);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            return rs.getInt(1) > 0;
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return false;
+}
+
+public static boolean updateStock(String serialNo, int quantity) {
+    String query = "UPDATE accessories SET quantity = quantity - ? WHERE serialNo = ?";
+    try (Connection conn = DriverManager.getConnection(DB_URL);
+         PreparedStatement stmt = conn.prepareStatement(query)) {
+        stmt.setInt(1, quantity);
+        stmt.setString(2, serialNo);
+        return stmt.executeUpdate() > 0;
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return false;
+}
+
 }

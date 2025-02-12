@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import static javax.swing.UIManager.getString;
 
@@ -202,6 +203,26 @@ public static boolean deleteUserByLogin(String login) {
     }
     return deleted;
 }
+
+public static int getUserId(String userLogin) {
+    String query = "SELECT userId FROM users WHERE login = ?";
+    int userId = -1;
+
+    try (Connection conn = DriverManager.getConnection(DB_URL);
+         PreparedStatement stmt = conn.prepareStatement(query)) {
+        
+        stmt.setString(1, userLogin);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            userId = rs.getInt("userId");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return userId;
+}
+
 
     
 }

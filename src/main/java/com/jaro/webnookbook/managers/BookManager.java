@@ -74,6 +74,7 @@ public class BookManager {
         }
         return book;
     }
+    
     public static void updateBookQuantity(String serialNo, int quantityPurchased) {
         try {
             Class.forName("org.sqlite.JDBC");
@@ -99,6 +100,32 @@ public class BookManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    public static boolean isBook(String serialNo) {
+        String query = "SELECT 1 FROM books WHERE serialNo = ?";
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, serialNo);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean updateStock(String serialNo, int quantityChange) {
+        String query = "UPDATE books SET quantity = quantity - ? WHERE serialNo = ?";
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, quantityChange);
+            stmt.setString(2, serialNo);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
     
     // Search books by title
@@ -179,29 +206,3 @@ public class BookManager {
 }
 }
     
-//    public static List<Book> searchBooksByAuthor(String author) {
-//        List<Book> books = new ArrayList<>();
-//        String sql = "SELECT * FROM books WHERE LOWER(author) LIKE LOWER('%'||?||'%');";
-//        
-//        try (Connection conn = DriverManager.getConnection(DB_URL);
-//             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-//            
-//            pstmt.setString(1, "%" + author + "%");
-//            try (ResultSet rs = pstmt.executeQuery()) {
-//                while (rs.next()) {
-//                    books.add(new Book(
-//                        rs.getString("serialNo"),
-//                        rs.getString("title"),
-//                        rs.getString("author"),
-//                        rs.getDouble("price"),
-//                        rs.getInt("quantity"),
-//                        new Category(rs.getInt("categoryId"), rs.getString("categoryName"))
-//));
-//                }
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return books;
-//    }
-//}

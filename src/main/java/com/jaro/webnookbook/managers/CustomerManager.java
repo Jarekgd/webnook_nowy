@@ -1,6 +1,7 @@
 package com.jaro.webnookbook.managers;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,19 +25,47 @@ public class CustomerManager {
         }
         return balance;
     }
+    
+    
 
-    public static void updateBalance(String userLogin, double newBalance) {
-        String updateSQL = "UPDATE users SET balance = ? WHERE login = ?";
-        
-        try (Connection conn = DatabaseManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(updateSQL)) {
-            stmt.setDouble(1, newBalance);
-            stmt.setString(2, userLogin);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public static boolean updateBalance(String userLogin, double amount) {
+    String query = "UPDATE users SET balance = balance - ? WHERE login = ? AND balance >= ?";
+
+    try (Connection conn = DatabaseManager.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(query)) {
+
+        stmt.setDouble(1, amount);
+        stmt.setString(2, userLogin);
+        stmt.setDouble(3, amount); // Ensure user has enough balance
+
+        int affectedRows = stmt.executeUpdate();
+        return affectedRows > 0; // Return true if balance was updated successfully
+
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+    return false;
+}
+    
+    public static boolean addFunds(String userLogin, double amount) {
+    String query = "UPDATE users SET balance = balance + ? WHERE login = ?";
+
+    try (Connection conn = DatabaseManager.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(query)) {
+
+        stmt.setDouble(1, amount);
+        stmt.setString(2, userLogin);
+
+        int affectedRows = stmt.executeUpdate();
+        return affectedRows > 0; // Return true if balance was updated successfully
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return false;
+}
+
+
 
     public static String getBalanceMessage(String userLogin) {
         double balance = getBalance(userLogin);
