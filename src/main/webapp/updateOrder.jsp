@@ -18,29 +18,29 @@
 %>
 
 <html>
-<head>
-    <title>Update Order</title>
-</head>
-<body>
-    <h2>Update Order #<%= order.getOrderId() %></h2>
+    <head>
+        <title>Update Order</title>
+    </head>
+    <body>
+        <h2>Update Order #<%= order.getOrderId()%></h2>
 
-    <p><strong>User:</strong> <%= order.getUserLogin() %></p>
-    <p><strong>Total Amount:</strong> $<%= order.getTotalAmount() %></p>
-    <p><strong>Date:</strong> <%= order.getOrderDate() %></p>
+        <p><strong>User:</strong> <%= order.getUserLogin()%></p>
+        <p><strong>Total Amount:</strong> $<%= order.getTotalAmount()%></p>
+        <p><strong>Date:</strong> <%= order.getOrderDate()%></p>
 
-    <form action="UpdateOrderServlet" method="post">
-        <input type="hidden" name="orderId" value="<%= order.getOrderId() %>">
-        <label>Order Status:</label>
-        <select name="status">
-            <option value="Pending" <% if ("Pending".equals(order.getStatus())) { %> selected <% } %>>Pending</option>
-            <option value="Shipped" <% if ("Shipped".equals(order.getStatus())) { %> selected <% } %>>Shipped</option>
-            <option value="Delivered" <% if ("Delivered".equals(order.getStatus())) { %> selected <% } %>>Delivered</option>
-            <option value="Canceled" <% if ("Canceled".equals(order.getStatus())) { %> selected <% } %>>Canceled</option>
-        </select><br>
+        <form action="UpdateOrderServlet" method="post">
+            <input type="hidden" name="orderId" value="<%= order.getOrderId()%>">
+            <label>Order Status:</label>
+            <select name="status">
+                <option value="Pending" <% if ("Pending".equals(order.getStatus())) { %> selected <% } %>>Pending</option>
+                <option value="Shipped" <% if ("Shipped".equals(order.getStatus())) { %> selected <% } %>>Shipped</option>
+                <option value="Delivered" <% if ("Delivered".equals(order.getStatus())) { %> selected <% } %>>Delivered</option>
+                <option value="Canceled" <% if ("Canceled".equals(order.getStatus())) { %> selected <% }%>>Canceled</option>
+            </select><br>
 
-        <button type="submit">Update Order</button>
-    </form>
+            <button type="submit">Update Order</button>
+        </form>
 
-    <a href="manageOrders.jsp">Back to Orders</a>
-</body>
+        <a href="manageOrders.jsp">Back to Orders</a>
+    </body>
 </html>

@@ -20,24 +20,24 @@
 %>
 
 <html>
-<head>
-    <title>Order Details</title>
-</head>
-<body>
-    <h2>Order Details</h2>
+    <head>
+        <title>Order Details</title>
+    </head>
+    <body>
+        <h2>Order Details</h2>
 
-    <p>Order ID: <%= order.getOrderId() %></p>
-    <p>User: <%= order.getUserLogin() %></p>
-    <p>Total Amount: $<%= order.getTotalAmount() %></p>
-    <p>Status: <%= order.getStatus() %></p>
+        <p>Order ID: <%= order.getOrderId()%></p>
+        <p>User: <%= order.getUserLogin()%></p>
+        <p>Total Amount: $<%= order.getTotalAmount()%></p>
+        <p>Status: <%= order.getStatus()%></p>
 
-    <h3>Order Items:</h3>
-    <ul>
-        <% for (var item : order.getItems()) { %>
-            <li><%= item.getName() %> - $<%= item.getPrice() %> (x<%= item.getQuantity() %>)</li>
-        <% } %>
-    </ul>
+        <h3>Order Items:</h3>
+        <ul>
+            <% for (var item : order.getItems()) {%>
+            <li><%= item.getName()%> - $<%= item.getPrice()%> (x<%= item.getQuantity()%>)</li>
+                <% }%>
+        </ul>
 
-    <a href="customerDashboard.jsp">Back to Orders</a>
-</body>
+        <a href="customerDashboard.jsp">Back to Orders</a>
+    </body>
 </html>

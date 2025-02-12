@@ -11,9 +11,10 @@ import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/RemoveFromCartServlet")
 public class RemoveFromCartServlet extends HttpServlet {
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         HttpSession session = request.getSession();
         String userLogin = (String) session.getAttribute("userLogin");
 

@@ -18,24 +18,24 @@
 %>
 
 <html>
-<head>
-    <title>Edit Category</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-    <div class="container">
-    <h2>Edit Category</h2>
+    <head>
+        <title>Edit Category</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <div class="container">
+            <h2>Edit Category</h2>
 
-    <form action="EditCategoryServlet" method="post">
-        <input type="hidden" name="categoryId" value="<%= category.getId() %>">
+            <form action="EditCategoryServlet" method="post">
+                <input type="hidden" name="categoryId" value="<%= category.getId()%>">
 
-        <label>Category Name:</label>
-        <input type="text" name="categoryName" value="<%= category.getName() %>" required><br>
+                <label>Category Name:</label>
+                <input type="text" name="categoryName" value="<%= category.getName()%>" required><br>
 
-        <button type="submit">Update Category</button>
-    </form>
+                <button type="submit">Update Category</button>
+            </form>
 
-    <a href="manageCategories.jsp">Back to Categories</a>
-    </div>
-</body>
+            <a href="manageCategories.jsp">Back to Categories</a>
+        </div>
+    </body>
 </html>

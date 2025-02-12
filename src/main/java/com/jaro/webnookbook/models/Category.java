@@ -4,6 +4,7 @@ package com.jaro.webnookbook.models;
  * Category class for representing categories
  */
 public class Category {
+
     private int id;
     private String name;
 

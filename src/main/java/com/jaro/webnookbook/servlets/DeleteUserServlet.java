@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/DeleteUserServlet")
 public class DeleteUserServlet extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

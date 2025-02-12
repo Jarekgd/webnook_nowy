@@ -6,10 +6,10 @@
     Order order = orderManager.getOrderDetails(orderId);
 %>
 
-<h2>Order Details (Order ID: <%= order.getOrderId() %>)</h2>
-<p><b>Order Date:</b> <%= order.getOrderDate() %></p>
-<p><b>Total Amount:</b> $<%= order.getTotalAmount() %></p>
-<p><b>Status:</b> <%= order.getStatus() %></p>
+<h2>Order Details (Order ID: <%= order.getOrderId()%>)</h2>
+<p><b>Order Date:</b> <%= order.getOrderDate()%></p>
+<p><b>Total Amount:</b> $<%= order.getTotalAmount()%></p>
+<p><b>Status:</b> <%= order.getStatus()%></p>
 
 <h3>Items in this Order:</h3>
 <table border="1">
@@ -22,12 +22,12 @@
     <%
         for (OrderItem item : order.getItems()) {
     %>
-        <tr>
-            <td><%= item.getSerialNo() %></td>
-            <td><%= item.getName() %></td>
-            <td><%= item.getQuantity() %></td>
-            <td>$<%= item.getPrice() %></td>
-        </tr>
+    <tr>
+        <td><%= item.getSerialNo()%></td>
+        <td><%= item.getName()%></td>
+        <td><%= item.getQuantity()%></td>
+        <td>$<%= item.getPrice()%></td>
+    </tr>
     <%
         }
     %>

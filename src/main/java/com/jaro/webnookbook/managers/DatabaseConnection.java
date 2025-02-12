@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
+
     private static final String DB_URL = "jdbc:sqlite:C:\\webnookbook\\sqlite\\nookbook.db";
 
     public static Connection getConnection() throws SQLException {
@@ -16,4 +17,3 @@ public class DatabaseConnection {
         }
     }
 }
-

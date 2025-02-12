@@ -22,6 +22,7 @@ import java.sql.ResultSet;
  */
 @WebServlet("/SearchAccessoryServlet")
 public class SearchAccessoryServlet extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

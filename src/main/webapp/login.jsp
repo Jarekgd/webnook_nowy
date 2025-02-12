@@ -1,35 +1,35 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
-<head>
-    <title>Login Page</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-    <div class="container">
-    <h2>Login</h2>
-    
-    <% 
-        String error = request.getParameter("error");
-        if (error != null) { 
-    %>
-        <p style="color:red;">Invalid login or password. Please try again.</p>
-    <% 
-        } 
-    %>
+    <head>
+        <title>Login Page</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <div class="container">
+            <h2>Login</h2>
 
-    <form action="LoginServlet" method="post">
-        <label>Login:</label>
-        <input type="text" name="login" required><br><br>
+            <%
+                String error = request.getParameter("error");
+                if (error != null) {
+            %>
+            <p style="color:red;">Invalid login or password. Please try again.</p>
+            <%
+                }
+            %>
 
-        <label>Password:</label>
-        <input type="password" name="password" required><br><br>
+            <form action="LoginServlet" method="post">
+                <label>Login:</label>
+                <input type="text" name="login" required><br><br>
 
-        <input type="submit" value="Login">
-    </form>
+                <label>Password:</label>
+                <input type="password" name="password" required><br><br>
 
-    <br>
-    <a href="register.jsp">Register Here</a>
-    </div>
-</body>
+                <input type="submit" value="Login">
+            </form>
+
+            <br>
+            <a href="register.jsp">Register Here</a>
+        </div>
+    </body>
 </html>

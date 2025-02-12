@@ -8,9 +8,9 @@
     </head>
     <body>
         <div class="container">
-        <h1>Welcome to NookBook</h1>
-        <a href="login.jsp">Login</a><br>
-        <a href="register.jsp">Add new user</a><br>
+            <h1>Welcome to NookBook</h1>
+            <a href="login.jsp">Login</a><br>
+            <a href="register.jsp">Add new user</a><br>
         </div>
     </body>
 </html>

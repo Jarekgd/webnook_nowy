@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/DeleteBookServlet")
 public class DeleteBookServlet extends HttpServlet {
+
     private static final String DB_URL = "jdbc:sqlite:C:\\webnookbook\\sqlite\\nookbook.db";
 
     @Override

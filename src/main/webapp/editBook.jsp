@@ -20,42 +20,42 @@
 %>
 
 <html>
-<head>
-    <title>Edit Book</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-    <div class="container">
-    <h2>Edit Book</h2>
+    <head>
+        <title>Edit Book</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <div class="container">
+            <h2>Edit Book</h2>
 
-    <form action="EditBookServlet" method="post">
-        <input type="hidden" name="serialNo" value="<%= book.getSerialNo() %>">
+            <form action="EditBookServlet" method="post">
+                <input type="hidden" name="serialNo" value="<%= book.getSerialNo()%>">
 
-        <label>Book Title:</label>
-        <input type="text" name="title" value="<%= book.getName() %>" required><br>
- 
-        <label>Author:</label>
-        <input type="text" name="author" value="<%= book.getAuthor() %>" required><br>       
+                <label>Book Title:</label>
+                <input type="text" name="title" value="<%= book.getName()%>" required><br>
 
-        <label>Price:</label>
-        <input type="number" step="0.01" name="bookPrice" value="<%= book.getPrice() %>" required><br>
+                <label>Author:</label>
+                <input type="text" name="author" value="<%= book.getAuthor()%>" required><br>       
 
-        <label>Quantity:</label>
-        <input type="number" name="bookQuantity" value="<%= book.getQuantity() %>" required><br>
+                <label>Price:</label>
+                <input type="number" step="0.01" name="bookPrice" value="<%= book.getPrice()%>" required><br>
 
-        <label>Category:</label>
-        <select name="categoryId" required>
-            <% for (Category category : categories) { %>
-                <option value="<%= category.getId() %>" <% if (category.getId() == book.getCategoryId()) { %> selected <% } %>>
-                    <%= category.getName() %>
-                </option>
-            <% } %>
-        </select><br>
+                <label>Quantity:</label>
+                <input type="number" name="bookQuantity" value="<%= book.getQuantity()%>" required><br>
 
-        <button type="submit">Update Book</button>
-    </form>
+                <label>Category:</label>
+                <select name="categoryId" required>
+                    <% for (Category category : categories) {%>
+                    <option value="<%= category.getId()%>" <% if (category.getId() == book.getCategoryId()) { %> selected <% }%>>
+                        <%= category.getName()%>
+                    </option>
+                    <% }%>
+                </select><br>
 
-    <a href="adminViewBooks.jsp">Back</a>
-    </div>
-</body>
+                <button type="submit">Update Book</button>
+            </form>
+
+            <a href="adminViewBooks.jsp">Back</a>
+        </div>
+    </body>
 </html>

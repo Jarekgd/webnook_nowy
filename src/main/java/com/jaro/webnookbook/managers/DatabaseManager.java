@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseManager {
+
     private static final String URL = "jdbc:sqlite:C:\\webnookbook\\sqlite\\nookbook.db";
     private static final String DRIVER = "org.sqlite.JDBC";
 

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package com.jaro.webnookbook.servlets;
 
 import java.io.IOException;
@@ -38,7 +34,7 @@ public class NewAccessoryServlet extends HttpServlet {
         String accessoryName = request.getParameter("accessoryName");
         String price = request.getParameter("price");
         String quantity = request.getParameter("quantity");
-        
+
         String dbUrl = "jdbc:sqlite:C:\\webnookbook\\sqlite\\nookbook.db";
 
         response.setContentType("text/html");

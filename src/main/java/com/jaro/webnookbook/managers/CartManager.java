@@ -5,6 +5,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class CartManager {
+
     private static final String DB_URL = "jdbc:sqlite:C:\\webnookbook\\sqlite\\nookbook.db";
 
     public static ArrayList<CartItem> getCart(String userLogin) {
@@ -18,10 +19,10 @@ public class CartManager {
                     try (ResultSet rs = pstmt.executeQuery()) {
                         while (rs.next()) {
                             cartItems.add(new CartItem(
-                                rs.getString("serialNo"),
-                                rs.getString("name"),
-                                rs.getDouble("price"),
-                                rs.getInt("quantity")
+                                    rs.getString("serialNo"),
+                                    rs.getString("name"),
+                                    rs.getDouble("price"),
+                                    rs.getInt("quantity")
                             ));
                         }
                     }
@@ -65,6 +66,7 @@ public class CartManager {
             e.printStackTrace();
         }
     }
+
     public static void addToCart(String userLogin, String serialNo, String name, double price, int quantity) {
         try {
             Class.forName("org.sqlite.JDBC");
@@ -120,4 +122,3 @@ public class CartManager {
         }
     }
 }
-

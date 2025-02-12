@@ -10,7 +10,7 @@
 
     String login = (String) session.getAttribute("userLogin");
     String dbUrl = "jdbc:sqlite:C:\\webnookbook\\sqlite\\nookbook.db";
-    
+
     String email = "";
     String userName = "";
     String password = "";
@@ -36,39 +36,39 @@
 %>
 
 <html>
-<head>
-    <title>Edit Account</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-<div class="container">
-    <h2>Edit Account Details</h2>
+    <head>
+        <title>Edit Account</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <div class="container">
+            <h2>Edit Account Details</h2>
 
-    <% if (request.getParameter("error") != null) { %>
-        <p style="color:red;">Error updating account. Please try again.</p>
-    <% } %>
+            <% if (request.getParameter("error") != null) { %>
+            <p style="color:red;">Error updating account. Please try again.</p>
+            <% } %>
 
-    <% if (request.getParameter("success") != null) { %>
-        <p style="color:green;">Account updated successfully!</p>
-    <% } %>
+            <% if (request.getParameter("success") != null) { %>
+            <p style="color:green;">Account updated successfully!</p>
+            <% }%>
 
-    <form action="EditAccountServlet" method="post">
-        <label>Email:</label>
-        <input type="email" name="email" value="<%= email %>" required><br><br>
+            <form action="EditAccountServlet" method="post">
+                <label>Email:</label>
+                <input type="email" name="email" value="<%= email%>" required><br><br>
 
-        <label>Username:</label>
-        <input type="text" name="userName" value="<%= userName %>" required><br><br>
+                <label>Username:</label>
+                <input type="text" name="userName" value="<%= userName%>" required><br><br>
 
-        <label>Login:</label>
-        <input type="text" name="login" value="<%= login %>" required><br><br>
+                <label>Login:</label>
+                <input type="text" name="login" value="<%= login%>" required><br><br>
 
-        <label>Password:</label>
-        <input type="password" name="password" value="<%= password %>" required><br><br>
+                <label>Password:</label>
+                <input type="password" name="password" value="<%= password%>" required><br><br>
 
-        <input type="submit" value="Update">
-    </form>
+                <input type="submit" value="Update">
+            </form>
 
-    <a href="customerDashboard.jsp">Back</a>
-</div>
-</body>
+            <a href="customerDashboard.jsp">Back</a>
+        </div>
+    </body>
 </html>

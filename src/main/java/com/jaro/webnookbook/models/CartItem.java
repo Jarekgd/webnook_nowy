@@ -1,6 +1,7 @@
 package com.jaro.webnookbook.models;
 
 public class CartItem {
+
     private String serialNo;
     private String name;
     private double price;
@@ -13,10 +14,23 @@ public class CartItem {
         this.quantity = quantity;
     }
 
-    public String getSerialNo() { return serialNo; }
-    public String getName() { return name; }
-    public double getPrice() { return price; }
-    public int getQuantity() { return quantity; }
+    public String getSerialNo() {
+        return serialNo;
+    }
 
-    public void setQuantity(int quantity) { this.quantity = quantity; }
+    public String getName() {
+        return name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 }

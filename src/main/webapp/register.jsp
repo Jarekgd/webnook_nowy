@@ -6,33 +6,33 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
-    <title>Register</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-    <div class="container">
-    <h2>Register</h2>
+    <head>
+        <title>Register</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <div class="container">
+            <h2>Register</h2>
 
-    <form action="NewUserServlet" method="post">
+            <form action="NewUserServlet" method="post">
 
-        <label>Email:</label>
-        <input type="email" name="email" required><br><br>
+                <label>Email:</label>
+                <input type="email" name="email" required><br><br>
 
-        <label>Username:</label>
-        <input type="text" name="userName" required><br><br>
+                <label>Username:</label>
+                <input type="text" name="userName" required><br><br>
 
-        <label>Login:</label>
-        <input type="text" name="login" required><br><br>
+                <label>Login:</label>
+                <input type="text" name="login" required><br><br>
 
-        <label>Password:</label>
-        <input type="password" name="password" required><br><br>
+                <label>Password:</label>
+                <input type="password" name="password" required><br><br>
 
-        <input type="submit" value="Register">
-    </form>
+                <input type="submit" value="Register">
+            </form>
 
-    <br>
-    <a href="login.jsp">Already have an account? Login</a>
-    </div>
-</body>
+            <br>
+            <a href="login.jsp">Already have an account? Login</a>
+        </div>
+    </body>
 </html>

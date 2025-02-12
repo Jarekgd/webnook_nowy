@@ -22,7 +22,7 @@ public class CheckoutServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         HttpSession session = request.getSession();
         String userLogin = (String) session.getAttribute("userLogin");
 
@@ -114,5 +114,3 @@ public class CheckoutServlet extends HttpServlet {
         }
     }
 }
-
-

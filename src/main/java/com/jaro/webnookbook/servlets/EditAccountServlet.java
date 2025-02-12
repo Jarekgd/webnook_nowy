@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/EditAccountServlet")
 public class EditAccountServlet extends HttpServlet {
+
     private static final String DB_URL = "jdbc:sqlite:C:\\webnookbook\\sqlite\\nookbook.db";
 
     @Override

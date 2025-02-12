@@ -1,8 +1,9 @@
 package com.jaro.webnookbook.models;
 
 public class Book extends Product {
+
     private String author;
-    private Category category; 
+    private Category category;
 
     public Book(String serialNo, String name, String author, double price, int quantity, Category category) {
         super(serialNo, name, price, quantity);

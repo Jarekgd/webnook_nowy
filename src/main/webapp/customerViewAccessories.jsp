@@ -11,45 +11,45 @@
 %>
 
 <html>
-<head>
-    <title>Available Accessories</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-    <div class="container">
-    <h2>Accessories</h2>
+    <head>
+        <title>Available Accessories</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <div class="container">
+            <h2>Accessories</h2>
 
-    <table border="1">
-        <tr>
-            <th>Serial Number</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Action</th>
-        </tr>
-        <% for (Accessory accessory : accessories) { %>
-            <tr>
-                <td><%= accessory.getSerialNo() %></td>
-                <td><%= accessory.getName() %></td>
-                <td>$<%= accessory.getPrice() %></td>
-                <td><%= accessory.getQuantity() %></td>
-                <td>
-                    <% if (accessory.getQuantity() > 0) { %>
+            <table border="1">
+                <tr>
+                    <th>Serial Number</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Action</th>
+                </tr>
+                <% for (Accessory accessory : accessories) {%>
+                <tr>
+                    <td><%= accessory.getSerialNo()%></td>
+                    <td><%= accessory.getName()%></td>
+                    <td>$<%= accessory.getPrice()%></td>
+                    <td><%= accessory.getQuantity()%></td>
+                    <td>
+                        <% if (accessory.getQuantity() > 0) {%>
                         <form action="AddToCartServlet" method="post">
                             <input type="hidden" name="productType" value="accessory">
-                            <input type="hidden" name="serialNo" value="<%= accessory.getSerialNo() %>">
+                            <input type="hidden" name="serialNo" value="<%= accessory.getSerialNo()%>">
                             <input type="number" name="quantity" value="1" min="1">
                             <button type="submit">Add to Cart</button>
                         </form>
-                    <% } else { %>
+                        <% } else { %>
                         <span style="color: red;">Not Available</span>
-                    <% } %>
-                </td>
-            </tr>
-        <% } %>
-    </table>
+                        <% } %>
+                    </td>
+                </tr>
+                <% }%>
+            </table>
 
-    <a href="customerDashboard.jsp">Back to Dashboard</a>
-    </div>
-</body>
+            <a href="customerDashboard.jsp">Back to Dashboard</a>
+        </div>
+    </body>
 </html>

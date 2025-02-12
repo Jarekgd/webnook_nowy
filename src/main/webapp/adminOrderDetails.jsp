@@ -15,32 +15,32 @@
 %>
 
 <html>
-<head>
-    <title>Order Details</title>
-</head>
-<body>
-    <h2>Order Details (ID: <%= order.getOrderId() %>)</h2>
-    <p><strong>User:</strong> <%= order.getUserLogin() %></p>
-    <p><strong>Total Amount:</strong> $<%= order.getTotalAmount() %></p>
-    <p><strong>Order Date:</strong> <%= order.getOrderDate() %></p>
-    <p><strong>Status:</strong> <%= order.getStatus() %></p>
+    <head>
+        <title>Order Details</title>
+    </head>
+    <body>
+        <h2>Order Details (ID: <%= order.getOrderId()%>)</h2>
+        <p><strong>User:</strong> <%= order.getUserLogin()%></p>
+        <p><strong>Total Amount:</strong> $<%= order.getTotalAmount()%></p>
+        <p><strong>Order Date:</strong> <%= order.getOrderDate()%></p>
+        <p><strong>Status:</strong> <%= order.getStatus()%></p>
 
-    <h3>Items in this Order:</h3>
-    <table border="1">
-        <tr>
-            <th>Item Name</th>
-            <th>Quantity</th>
-            <th>Price</th>
-        </tr>
-        <% for (OrderItem item : order.getItems()) { %>
+        <h3>Items in this Order:</h3>
+        <table border="1">
             <tr>
-                <td><%= item.getName() %></td>
-                <td><%= item.getQuantity() %></td>
-                <td>$<%= item.getPrice() %></td>
+                <th>Item Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
             </tr>
-        <% } %>
-    </table>
+            <% for (OrderItem item : order.getItems()) {%>
+            <tr>
+                <td><%= item.getName()%></td>
+                <td><%= item.getQuantity()%></td>
+                <td>$<%= item.getPrice()%></td>
+            </tr>
+            <% }%>
+        </table>
 
-    <a href="adminOrders.jsp">Back to Orders</a>
-</body>
+        <a href="adminOrders.jsp">Back to Orders</a>
+    </body>
 </html>

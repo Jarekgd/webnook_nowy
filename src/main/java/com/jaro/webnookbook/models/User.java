@@ -1,13 +1,10 @@
 package com.jaro.webnookbook.models;
 
 /**
- *
- * @author Jaro
+ * ************ class user for both customer and admin login ***************
  */
-
-/************** class user for both customer and admin login ****************/
 public class User {
-    
+
 // attributes:
     private String email;
     private String userName;
@@ -15,7 +12,7 @@ public class User {
     private String password;
     private String privilege;
     private static int autoIncrement = 1;
-    
+
 // constructor:
     public User(String email, String userName, String login, String password, String privilege) {
         this.email = email;

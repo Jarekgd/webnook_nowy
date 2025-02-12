@@ -11,10 +11,11 @@ import java.io.IOException;
 
 @WebServlet("/AddFundsServlet")
 public class AddFundsServlet extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         HttpSession session = request.getSession();
         String userLogin = (String) session.getAttribute("userLogin");
 

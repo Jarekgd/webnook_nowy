@@ -48,9 +48,8 @@ public abstract class Product {
     public double getPrice() {
         return price;
     }
-    
-//    Setters - methods that allow to modify attributes values
 
+//    Setters - methods that allow to modify attributes values
     public void setId(int id) {
         this.id = id;
     }

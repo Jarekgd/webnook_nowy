@@ -10,8 +10,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/EditAccessoryServlet")  
+@WebServlet("/EditAccessoryServlet")
 public class EditAccessoryServlet extends HttpServlet {
+
     private static final String DB_URL = "jdbc:sqlite:C:\\webnookbook\\sqlite\\nookbook.db";
 
     @Override
