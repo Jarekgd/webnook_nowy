@@ -48,7 +48,7 @@
                 <tr>
                     <td><%= book.getName()%></td>   
                     <td><%= book.getAuthor()%></td>
-                    <td><%= book.getPrice()%></td>
+                    <td>£<%= String.format("%.2f", book.getPrice())%></td>
                     <td><%= book.getCategory().getName()%></td>  
                 </tr>
                 <%

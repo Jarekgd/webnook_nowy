@@ -31,7 +31,7 @@
                 <tr>
                     <td><%= accessory.getSerialNo()%></td>
                     <td><%= accessory.getName()%></td>
-                    <td>$<%= accessory.getPrice()%></td>
+                    <td>£<%= String.format("%.2f", accessory.getPrice())%></td>
                     <td><%= accessory.getQuantity()%></td>
                     <td>
                         <% if (accessory.getQuantity() > 0) {%>

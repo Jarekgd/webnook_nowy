@@ -25,7 +25,7 @@
     <h2>Order Details</h2>
 
     <p><strong>Order ID:</strong> <%= order.getOrderId() %></p>
-    <p><strong>Total Amount:</strong> $<%= order.getTotalAmount() %></p>
+    <p><strong>Total Amount:</strong> £<%= String.format("%.2f", order.getTotalAmount()) %></p>
     <p><strong>Status:</strong> <%= order.getStatus() %></p>
 
     <h3>Items in Order:</h3>
@@ -39,7 +39,7 @@
             <tr>
     <td><%= item.getProductSerial() %></td>  
     <td><%= item.getQuantity() %></td>
-    <td>$<%= String.format("%.2f", item.getPrice()) %></td>
+    <td>£<%= String.format("%.2f", item.getPrice()) %></td>
 </tr>
 
         <% } %>

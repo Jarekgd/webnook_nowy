@@ -16,7 +16,7 @@
     <body>
         <div class="container">
             <h2>Welcome, <%= userLogin%>!</h2>
-            <h3>Your Balance: $<%= balance%></h3>
+            <h3>Your Balance: £<%= String.format("%.2f", balance)%></h3>
 
             <h3>Add Funds</h3>
             <form action="AddFundsServlet" method="post">

@@ -36,7 +36,7 @@
                 %>
                 <tr>
                     <td><%= item.getName()%></td>
-                    <td>$<%= item.getPrice()%></td>
+                    <td>£<%= String.format("%.2f", item.getPrice())%></td>
                     <td>
                         <form action="UpdateCartServlet" method="post">
                             <input type="hidden" name="serialNo" value="<%= item.getSerialNo()%>">
@@ -44,7 +44,7 @@
                             <button type="submit">Update</button>
                         </form>
                     </td>
-                    <td>$<%= subtotal%></td>
+                    <td>£<%= String.format("%.2f", subtotal)%></td>
                     <td>
                         <a href="RemoveFromCartServlet?serialNo=<%= item.getSerialNo()%>">Remove</a>
                     </td>
@@ -52,7 +52,7 @@
                 <% }%>
             </table>
 
-            <h3>Total: $<%= totalAmount%></h3>
+            <h3>Total: £<%= String.format("%.2f", totalAmount)%></h3>
 
             <% if (!cartItems.isEmpty()) { %>
             <form action="CheckoutServlet" method="post">
