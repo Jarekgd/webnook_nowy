@@ -22,6 +22,6 @@ public class DatabaseManager {
     }
 
     static Connection getConnection(String DB_URL) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 }

@@ -216,5 +216,32 @@ public class UserManager {
         }
         return userId;
     }
+public static double getUserBalance(String userLogin) {
+        String query = "SELECT balance FROM Users WHERE login = ?";
+        try (Connection conn = DatabaseManager.getConnection(DB_URL);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, userLogin);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getDouble("balance");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0.00; // Default balance if user not found
+    }
+public static boolean updateUserBalance(String userLogin, double newBalance) {
+        String query = "UPDATE Users SET balance = ? WHERE login = ?";
+        try (Connection conn = DatabaseManager.getConnection(DB_URL);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setDouble(1, newBalance);
+            stmt.setString(2, userLogin);
+            int affectedRows = stmt.executeUpdate();
+            return affectedRows > 0; // Return true if update was successful
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 }
