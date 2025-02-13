@@ -14,6 +14,13 @@
     <head>
         <title>Available Books</title>
         <link rel="stylesheet" type="text/css" href="style.css">
+        <script>
+    window.onload = function() {
+        <% if (request.getAttribute("errorMessage") != null) { %>
+            alert("<%= request.getAttribute("errorMessage") %>");
+        <% } %>
+    };
+</script>
     </head>
     <body>
         <div class="container">

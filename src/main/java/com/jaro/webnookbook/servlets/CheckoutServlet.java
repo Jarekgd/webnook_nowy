@@ -70,7 +70,7 @@ public class CheckoutServlet extends HttpServlet {
             if (orderId > 0) {
                 System.out.println("DEBUG: Order created successfully with ID: " + orderId);
 
-                // ✅ Deduct balance
+                // Deduct balance
                 boolean balanceUpdated = CustomerManager.updateBalance(userLogin, totalAmount);
                 if (!balanceUpdated) {
                     response.sendRedirect("customerCart.jsp?error=Failed to update balance");
