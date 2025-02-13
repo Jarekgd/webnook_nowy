@@ -43,7 +43,7 @@
                 <tr>
                     <td><%= order.getOrderId()%></td>
                     <td><%= order.getUserLogin()%></td>
-                    <td><%= order.getTotalAmount()%></td>
+                    <td>£<%= String.format("%.2f", order.getTotalAmount())%></td>
                     <td><%= order.getOrderDate()%></td>
                     <td><%= order.getStatus()%></td>
                     <td><a href="orderDetails.jsp?orderId=<%= order.getOrderId()%>">View</a></td>
